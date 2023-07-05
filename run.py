@@ -28,7 +28,25 @@ Get sales figures input from the user
     print('(+)Data should be six numbers, separated by commas.')
     print('(+)Example: 11,12,13,14,15,16\n')
 
-    data_str = int(input('(+)Enter your data here: '))
-    print(f'(+)The data provided is {data_str}')
+    data_str = input('(+)Enter your data here: ')
+    sales_data = data_str.split(",")
+    #print(f'(+)The data provided is {sales_data}')
+    validate_data(sales_data)
+
+
+def validate_data(values):
+    """
+    Validate our data given from the user before allowing the rest of the
+    program to run:
+    converts all string values into integers, raise ValueError if string cannot
+    be converted or if there aren't exactly 6 values
+    """
+    try:
+        if len(values) != 6:
+            raise ValueError(f"Exactly 6 values required, you provided {len(values)}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again. \n")
+
 
 get_sales_data()
