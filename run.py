@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 #Scope is constantant so we write it in CAP
 SCOPE = [
@@ -75,8 +76,26 @@ update sales worksheet, add new row with the list data provided
 
 
 
+def calculate_surplus_data(sale_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
+    -Positive surplus indicates waste
+    - Negative surlpus indicates extra made when stock was sold out
+    """
+    print("Calculating surplus data... \n")
+    stock = SHEET.worksheet('stock').get_all_values()
+    #pprint(stock)
+    stock_row = stock[-1]
+    pprint(stock_row)
 
+def main():
+    """
+    Run All program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+print("\n Welcome to Love Sandwiches Data Automation")
+main()
