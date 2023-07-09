@@ -25,7 +25,6 @@ def get_sales_data():
     """
 Get sales figures input from the user
     """
-
     while True:
         print('\n(+)Please enter sales data from th last markets.')
         print('(+)Data should be six numbers, separated by commas.')
@@ -42,7 +41,6 @@ Get sales figures input from the user
             break
 
     return sales_data
-
 
 
 def validate_data(values):
@@ -148,6 +146,23 @@ def calculate_sales_data(data):
     return new_stock_data
 
 
+def get_stock_values():
+    """
+    Create a dictionary, where the  keys are the sandwich headings,  
+    and the values are the calculated stock data.
+    """
+    print("Make the following numbers of sandwiches for next market: \n")
+    stock = SHEET.worksheet('stock').get_all_values()
+
+    heading = stock[0]
+    stock_market_values = stock[-1]
+    #print(heading)
+    #print(stock_market_values)
+    next_market = {heading[i]: int(stock_market_values[i]) for i in range(len(heading))}  
+    #next_market = dict(zip(heading, stock_market_values)) #Return later to fix this method as it return the stock_market_values as string not integers
+    print(next_market)
+
+
 def main():
     """
     Run All program functions
@@ -160,6 +175,8 @@ def main():
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_sales_data(sales_columns)
     update_worksheet(stock_data, 'stock')
+    get_stock_values()
+
+
 print("\n Welcome to Love Sandwiches Data Automation")
 main()
-
